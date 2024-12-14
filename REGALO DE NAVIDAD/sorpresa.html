@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Sorpresa Especial ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #1a1a1a;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Estrellas flotantes en el fondo */
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 1s infinite;
+        }
+
+        .heart-container {
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+            transform: scale(1.5);
+            z-index: 1;
+        }
+
+        .heart {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #40E0D0, #20B2AA);
+            transform: rotate(-45deg);
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(64, 224, 208, 0.5);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #40E0D0, #20B2AA);
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            left: 50%;
+        }
+
+        .heart::after {
+            top: -50%;
+            left: 0;
+        }
+
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            width: 300px;
+            z-index: 2;
+        }
+
+        .message h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+        }
+
+        .message p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3em;
+            margin: 15px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        /* Burbujas flotantes */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(64, 224, 208, 0.1);
+            animation: floatBubble linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(-45deg) scale(1); }
+            50% { transform: rotate(-45deg) scale(1.1); }
+            100% { transform: rotate(-45deg) scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1.5); }
+            50% { transform: translateY(-20px) scale(1.5); }
+            100% { transform: translateY(0px) scale(1.5); }
+        }
+
+        @keyframes firework {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)); opacity: 0; }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes floatBubble {
+            0% { 
+                transform: translate(0, 100vh);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% { 
+                transform: translate(var(--tx), -100px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(64, 224, 208, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(64, 224, 208, 0.8); }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="heart-container">
+        <div class="heart"></div>
+        <div class="message">
+            <h1>¡Feliz Navidad!</h1>
+            <p>Eres el regalo más hermoso que la vida me dio, mi amor eterno ✨</p>
+        </div>
+    </div>
+
+    <script>
+        // Crear estrellas en el fondo
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            const numberOfStars = 100;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Crear burbujas flotantes
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            
+            const size = Math.random() * 20 + 10;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            
+            const startX = Math.random() * window.innerWidth;
+            bubble.style.left = startX + 'px';
+            
+            const moveX = Math.random() * 100 - 50;
+            bubble.style.setProperty('--tx', moveX + 'px');
+            
+            document.body.appendChild(bubble);
+            
+            const duration = Math.random() * 3 + 4;
+            bubble.style.animation = `floatBubble ${duration}s linear forwards`;
+            
+            setTimeout(() => bubble.remove(), duration * 1000);
+        }
+
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            
+            const colors = ['#40E0D0', '#20B2AA', '#48D1CC', '#fff', '#7FFFD4'];
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            
+            firework.style.left = x + 'px';
+            firework.style.top = y + 'px';
+            firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 100 + 50;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            
+            firework.style.setProperty('--tx', tx + 'px');
+            firework.style.setProperty('--ty', ty + 'px');
+            
+            document.body.appendChild(firework);
+            
+            firework.style.animation = 'firework 1s forwards';
+            
+            setTimeout(() => firework.remove(), 1000);
+        }
+
+        createStars();
+        setInterval(createFirework, 50);
+        setInterval(createBubble, 300);
+    </script>
+</body>
+</html>
